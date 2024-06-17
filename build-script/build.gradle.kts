@@ -4,7 +4,7 @@ plugins {
     `java-gradle-plugin`
     `embedded-kotlin`
     `kotlin-dsl-precompiled-script-plugins`
-    kotlin("jvm") version "1.7.10"
+    kotlin("jvm") version "1.8.20"
 }
 
 repositories {
@@ -20,8 +20,10 @@ repositories {
 dependencies {
 //    implementation(kotlin("stdlib"))
 //    implementation("com.android.tools.build:gradle:4.0.0")
-    api ("org.jetbrains.kotlin:kotlin-stdlib:1.7.10")
+    api ("org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
     api ("com.android.tools.build:gradle:7.3.0")
+    implementation("com.google.dagger:hilt-android-gradle-plugin:2.46.1")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
     testImplementation("junit:junit:4.13")
 }
 
@@ -36,13 +38,13 @@ gradlePlugin{
 }
 
 
-//val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
-//compileKotlin.kotlinOptions {
-//    jvmTarget = "1.8"
-//    languageVersion = "1.5"
-//}
-//
-//val compileTestKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
-//compileTestKotlin.kotlinOptions {
-//    jvmTarget = "1.8"
-//}
+val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+    languageVersion = "1.5"
+}
+
+val compileTestKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
+compileTestKotlin.kotlinOptions {
+    jvmTarget = "1.8"
+}

@@ -4,16 +4,12 @@ import pokemon.model.core.ServerConfig
 
 object DefaultServerConfig {
     val devEnv = ServerConfig(
-        "https://api.skadik.dev.learningsuite.id/",
-        "",
-        "",
+        "https://pokeapi.co/api/",
         true
     )
 
     val prodEnv = ServerConfig(
-        "https://api.skadik.dev.learningsuite.id/",
-        "",
-        "",
+        "https://pokeapi.co/api/",
         false
     )
 }

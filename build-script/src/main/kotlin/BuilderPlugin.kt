@@ -45,7 +45,6 @@ class BuilderPlugin : Plugin<Project> {
         plugins.apply {
             apply("com.android.library")
             apply("kotlin-android")
-            apply("com.google.firebase.crashlytics")
             when (name) {
                 "model" -> {
                     apply("kotlin-parcelize")

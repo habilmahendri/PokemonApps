@@ -66,7 +66,7 @@ dependencies {
 
     implementation(project(mapOf("path" to ":android-base:hub")))
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.13.1")
     implementation("com.google.android.material:material:1.6.1")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

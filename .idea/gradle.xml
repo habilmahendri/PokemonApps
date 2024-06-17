@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/build-script" name="build-script">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-script" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/android-base" />
+            <option value="$PROJECT_DIR$/android-base/abstraction" />
+            <option value="$PROJECT_DIR$/android-base/data" />
+            <option value="$PROJECT_DIR$/android-base/hub" />
+            <option value="$PROJECT_DIR$/android-base/model" />
+            <option value="$PROJECT_DIR$/android-base/presentation" />
+            <option value="$PROJECT_DIR$/android-base/usecase" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/build-script" />
+            <option value="$PROJECT_DIR$/pokemon" />
+            <option value="$PROJECT_DIR$/pokemon/abstraction" />
+            <option value="$PROJECT_DIR$/pokemon/abstraction/base" />
+            <option value="$PROJECT_DIR$/pokemon/abstraction/home" />
+            <option value="$PROJECT_DIR$/pokemon/data" />
+            <option value="$PROJECT_DIR$/pokemon/data/base" />
+            <option value="$PROJECT_DIR$/pokemon/data/core" />
+            <option value="$PROJECT_DIR$/pokemon/data/home" />
+            <option value="$PROJECT_DIR$/pokemon/model" />
+            <option value="$PROJECT_DIR$/pokemon/model/base" />
+            <option value="$PROJECT_DIR$/pokemon/model/core" />
+            <option value="$PROJECT_DIR$/pokemon/model/home" />
+            <option value="$PROJECT_DIR$/pokemon/presentation" />
+            <option value="$PROJECT_DIR$/pokemon/presentation/base" />
+            <option value="$PROJECT_DIR$/pokemon/presentation/core" />
+            <option value="$PROJECT_DIR$/pokemon/presentation/home" />
+            <option value="$PROJECT_DIR$/pokemon/usecase" />
+            <option value="$PROJECT_DIR$/pokemon/usecase/base" />
+            <option value="$PROJECT_DIR$/pokemon/usecase/home" />
+          </set>
+        </option>
+        <option name="resolveExternalAnnotations" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
