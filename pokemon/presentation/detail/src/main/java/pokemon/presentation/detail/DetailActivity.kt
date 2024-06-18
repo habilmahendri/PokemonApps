@@ -1,6 +1,7 @@
 package pokemon.presentation.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -26,27 +27,32 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import base.presentation.BaseActivity
 import coil.compose.AsyncImage
 import dagger.hilt.android.AndroidEntryPoint
+import pokemon.model.detail.DetailArgument
 import pokemon.model.detail.Pokemon
+import pokemon.presentation.base.PokemonActivity
 import pokemon.presentation.base.toast
 
 @AndroidEntryPoint
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : PokemonActivity() {
     private val detailStateMachine:DetailStateMachine by viewModels()
-
+    private val data by parcelableArgs<DetailArgument>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val payload = data ?: return
+        Log.d("payloadintent", payload.name)
         setContent {
             LaunchedEffect(key1 = Unit, block = {
-                detailStateMachine.sendEvent(DetailEvent.GetPokemon("bulbasaur"))
-//                detailStateMachine.effect.collect{
-//                    when(it){
-//                        is HomeEffect.GoToDetailPokemon -> {
-//                            toast(it.pokemon.name)
-//                        }
-//                    }
-//                }
+                detailStateMachine.sendEvent(DetailEvent.GetPokemon(payload.name))
+                detailStateMachine.effect.collect{
+                    when(it){
+                        is DetailEffect.ShowToast -> {
+                            toast(it.probability.toString())
+                        }
+                    }
+                }
             } )
             val state by detailStateMachine.state.collectAsState()
 
@@ -57,21 +63,16 @@ class DetailActivity : AppCompatActivity() {
                     }
                     DetailState.Loading -> toast("loading")
                     is DetailState.Loaded -> {
-                        LoadedScreen(data = (state as DetailState.Loaded).pokemon)
+                        LoadedScreen(data = state as DetailState.Loaded)
                     }
 
-                    is DetailState.CatchedPokemon -> {
-                        if ((state as DetailState.CatchedPokemon).catchPokemon.probability == 0) toast("Gagal menangkap pokemon")
-                        else toast("Berhasil Menangkap Pokemon")
-
-                    }
                 }
             }
         }
     }
 
     @Composable
-    fun LoadedScreen(data:Pokemon) {
+    fun LoadedScreen(data:DetailState.Loaded) {
         Column(
             modifier = Modifier
                 .padding(10.dp)
@@ -79,25 +80,25 @@ class DetailActivity : AppCompatActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
-                model = data.image,
+                model = data.pokemon.image,
                 contentDescription = "image pokemon",
                 modifier = Modifier
                     .height(150.dp)
                     .width(150.dp)
             )
             Text(
-                text = data.name,
+                text = data.pokemon.name,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 15.dp)
             )
             LazyRow(content = {
-                items(data.types) {
+                items(data.pokemon.types) {
                     Chip(label = it, modifier = Modifier.padding(5.dp))
                 }
             })
             Text(
-                text = "Moves:  ${data.moves}",
+                text = "Moves:  ${data.pokemon.moves}",
                 modifier = Modifier.padding(vertical = 15.dp)
             )
             Button(
@@ -108,6 +109,18 @@ class DetailActivity : AppCompatActivity() {
                     .padding(top = 16.dp)
             ) {
                 Text("Tangkap Pokemon")
+            }
+
+            if(data.isButtonRelease){
+                Button(
+                    onClick = {
+                        detailStateMachine.sendEvent(DetailEvent.CatchPokemon)
+                    },
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                ) {
+                    Text("Release")
+                }
             }
         }
     }

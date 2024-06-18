@@ -50,15 +50,15 @@ abstract class BaseActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         startTransition()
-        onBackPressedDispatcher.addCallback(this) {
-            if (supportFragmentManager.backStackEntryCount == 1) finish()
-            else onBackPressedDispatcher.onBackPressed()
-        }
+//        onBackPressedDispatcher.addCallback(this) {
+//            if (supportFragmentManager.backStackEntryCount == 1) finish()
+//            else onBackPressedDispatcher.onBackPressed()
+//        }
     }
 
     override fun onPause() {
         super.onPause()
-        if (isTaskRoot) transition(R.anim.slide_in_up, R.anim.slide_out_down)
-        else finishTransition()
+//        if (isTaskRoot) transition(R.anim.slide_in_up, R.anim.slide_out_down)
+//        else finishTransition()
     }
 }

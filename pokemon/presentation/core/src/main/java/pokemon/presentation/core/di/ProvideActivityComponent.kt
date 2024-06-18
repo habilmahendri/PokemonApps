@@ -2,6 +2,7 @@ package pokemon.presentation.core.di
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import base.hub.RouterHandler
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,4 +24,5 @@ internal object ProvideActivityComponent {
         errorMapper: PokemonUseCaseErrorMapper,
     ): PokemonErrorHandler =
         PokemonErrorHandlerImpl(context as FragmentActivity, errorMapper)
+
 }

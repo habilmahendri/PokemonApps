@@ -10,7 +10,7 @@ import base.model.Route
 abstract class BaseRouter : DefaultLifecycleObserver {
     protected abstract val activity: FragmentActivity
     protected abstract val map: NavigationData
-    protected abstract val routerHandler: RouterHandler
+
 
     private val registry by lazy { activity.activityResultRegistry }
 
@@ -22,10 +22,8 @@ abstract class BaseRouter : DefaultLifecycleObserver {
             val contract = map[kclass] as? BaseContract<*, *> ?: throw Exception()
             val intent = contract.createIntent(activity, null)
             activity.startActivity(intent)
-            routerHandler.onNavigated(contract)
             onSuccess()
         } catch (e: Exception) {
-            routerHandler.onRouteNotFound(kclass.simpleName.toString())
         }
     }
 
@@ -35,10 +33,8 @@ abstract class BaseRouter : DefaultLifecycleObserver {
         try {
             val intent = (map[kclass] as? T)?.createIntent(activity, args)
             activity.startActivity(intent)
-            routerHandler.onNavigated(contract)
             onSuccess()
         } catch (e: Exception) {
-            routerHandler.onRouteNotFound(kclass.simpleName.toString())
         }
     }
 }

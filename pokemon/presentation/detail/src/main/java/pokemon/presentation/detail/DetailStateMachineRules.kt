@@ -7,11 +7,8 @@ sealed interface DetailState{
     object Loading:DetailState
 
     data class Loaded(
-        val pokemon: Pokemon
-    ):DetailState
-
-    data class CatchedPokemon(
-        val catchPokemon: CatchPokemon
+        val pokemon: Pokemon,
+        val isButtonRelease:Boolean = false
     ):DetailState
 
     object Failed:DetailState
@@ -23,5 +20,5 @@ sealed interface DetailEvent{
 }
 
 sealed interface DetailEffect{
-
+    data class ShowToast(val probability:Int):DetailEffect
 }

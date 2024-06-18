@@ -13,7 +13,7 @@ import javax.inject.Inject
 class DetailStateMachine @Inject constructor(private val getPokemonUseCase: GetDetailPokemonUseCase,
                                              private val catchPokemonUseCase: CatchPokemonUseCase,
                                            override var errorMapper: PokemonUseCaseErrorMapper
-) : PokemonStateMachine<DetailState, DetailEvent, NoArgs>() {
+) : PokemonStateMachine<DetailState, DetailEvent, DetailEffect>() {
     override fun getInitialState(): DetailState {
         return DetailState.Loading
     }
@@ -23,20 +23,28 @@ class DetailStateMachine @Inject constructor(private val getPokemonUseCase: GetD
         when (lastState) {
             is DetailState.Loaded -> {
                 when(event){
-                     is DetailEvent.GetPokemon -> {
-                        launcher.launch(getPokemonUseCase,event.name){
-                            state.setValue(DetailState.Loaded(it))
-                        }
-                    }
+                     is DetailEvent.GetPokemon -> Unit
 
                     DetailEvent.CatchPokemon -> {
                         launcher.launch(catchPokemonUseCase){
-                            state.setValue(DetailState.CatchedPokemon(it))
+                            state.setValue(lastState.copy(isButtonRelease = true))
+                            effect.setValue(DetailEffect.ShowToast(it.probability))
                         }
                     }
                 }
             }
-            else -> {}
+
+            DetailState.Failed -> {}
+            DetailState.Loading -> {
+                when(event){
+                    DetailEvent.CatchPokemon -> Unit
+                    is DetailEvent.GetPokemon -> {
+                        launcher.launch(getPokemonUseCase,event.name){
+                            state.setValue(DetailState.Loaded(it))
+                        }
+                    }
+                }
+            }
         }
 
     }

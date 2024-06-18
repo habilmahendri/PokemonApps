@@ -14,7 +14,6 @@ import javax.inject.Inject
 class HomeRouter @Inject constructor(
     override val activity: FragmentActivity,
     override val map: NavigationData,
-    override val routerHandler: RouterHandler,
 ) : BaseRouter() {
 
     fun goToDetail(name:String){
