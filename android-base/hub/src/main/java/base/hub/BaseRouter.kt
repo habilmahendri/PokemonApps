@@ -16,7 +16,7 @@ abstract class BaseRouter : DefaultLifecycleObserver {
 
     private val mutableSet = mutableSetOf<ActivityResultLauncher<Parcelable>>()
 
-    protected inline fun <reified T> launch(onSuccess: ()-> Unit = {}) where T : Route, T : BaseContract<NoArgs, *> {
+    protected inline fun <reified T> launch(onSuccess: () -> Unit = {}) where T : Route, T : BaseContract<NoArgs, *> {
         val kclass = T::class
         try {
             val contract = map[kclass] as? BaseContract<*, *> ?: throw Exception()
@@ -29,7 +29,7 @@ abstract class BaseRouter : DefaultLifecycleObserver {
         }
     }
 
-    protected inline fun <reified T, reified Args> launch(args: Args, onSuccess: ()-> Unit = {}) where T : Route, T : BaseContract<Args, *>, Args : Parcelable {
+    protected inline fun <reified T, reified Args> launch(args: Args, onSuccess: () -> Unit = {}) where T : Route, T : BaseContract<Args, *>, Args : Parcelable {
         val kclass = T::class
         val contract = map[kclass] as? T ?: throw Exception()
         try {

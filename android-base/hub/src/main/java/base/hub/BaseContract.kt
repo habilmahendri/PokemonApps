@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 
 abstract class BaseContract<Args : Parcelable, Result : Parcelable>(
     private val argsClass: KClass<Args>,
-    private val resultClass: KClass<Result>
+    private val resultClass: KClass<Result>,
 ) : ActivityResultContract<Args?, Result?>(),
     Route {
 
@@ -29,10 +29,10 @@ abstract class BaseContract<Args : Parcelable, Result : Parcelable>(
         NOARGS_NORESULT,
         ARGS_NORESULT,
         NOARGS_RESULT,
-        ARGS_RESULT
+        ARGS_RESULT,
     }
 
-    abstract val activityClass: KClass<out Activity>
+    abstract val contractDestination: ContractDestination
 
     companion object {
         private const val INTENT_ARGS = "contract.intent.args"
@@ -40,7 +40,12 @@ abstract class BaseContract<Args : Parcelable, Result : Parcelable>(
     }
 
     override fun createIntent(context: Context, input: Args?): Intent {
-        return Intent(context, activityClass.java).apply {
+        return when (contractDestination) {
+            is ContractDestination.Activity -> Intent(
+                context,
+                (contractDestination as ContractDestination.Activity).activityClass.java,
+            )
+        }.apply {
             putExtra(INTENT_ARGS, input)
         }
     }

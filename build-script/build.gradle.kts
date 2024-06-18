@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     `kotlin-dsl`
     `kotlin-dsl-base`
@@ -6,6 +8,7 @@ plugins {
     `kotlin-dsl-precompiled-script-plugins`
     kotlin("jvm") version "1.8.20"
 }
+
 
 repositories {
     google()
@@ -20,7 +23,7 @@ repositories {
 dependencies {
 //    implementation(kotlin("stdlib"))
 //    implementation("com.android.tools.build:gradle:4.0.0")
-    api ("org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
+    api ("org.jetbrains.kotlin:kotlin-stdlib:1.6.0")
     api ("com.android.tools.build:gradle:7.3.0")
     implementation("com.google.dagger:hilt-android-gradle-plugin:2.46.1")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
@@ -37,6 +40,13 @@ gradlePlugin{
     }
 }
 
+tasks{
+    withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-Xskip-prerelease-check")
+        }
+    }
+}
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileKotlin.kotlinOptions {

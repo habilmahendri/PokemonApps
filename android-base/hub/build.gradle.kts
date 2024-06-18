@@ -35,7 +35,7 @@ android {
 
 dependencies {
     api(project(":android-base:model"))
-    api( "androidx.appcompat:appcompat:1.5.1")
-    api( "androidx.activity:activity:1.5.1")
-    api( "androidx.fragment:fragment:1.5.2")
+    api("androidx.appcompat:appcompat:1.6.1")
+    api("androidx.activity:activity:1.7.2")
+    api("androidx.fragment:fragment:1.5.7")
 }

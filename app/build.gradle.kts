@@ -63,7 +63,7 @@ dependencies {
     rootProject.childProjects["pokemon"]?.childProjects?.get("data")?.childProjects?.forEach {
         implementation(project(it.value.path))
     }
-
+    implementation(project(":pokemon:model:core"))
     implementation(project(mapOf("path" to ":android-base:hub")))
 
     implementation("androidx.core:core-ktx:1.13.1")

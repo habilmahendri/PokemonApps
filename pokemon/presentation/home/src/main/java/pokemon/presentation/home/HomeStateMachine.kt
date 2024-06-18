@@ -10,14 +10,40 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeStateMachine @Inject constructor(private val getPokemonsUseCase: GetPokemonsUseCase,
                                            override var errorMapper: PokemonUseCaseErrorMapper
-) : PokemonStateMachine<HomeState,HomeEvent,NoArgs>() {
+) : PokemonStateMachine<HomeState,HomeEvent,HomeEffect>() {
     override fun getInitialState(): HomeState {
         return HomeState.Loading
     }
 
     override fun mapEvent(event: HomeEvent, lastState: HomeState) {
-        launcher.launch(getPokemonsUseCase){
-            state.setValue(HomeState.Loaded(it))
+
+        when (lastState) {
+            is HomeState.Loaded -> {
+                when(event){
+                    HomeEvent.GetPokemons -> {
+                        launcher.launch(getPokemonsUseCase){
+                            state.setValue(HomeState.Loaded(it))
+                        }
+                    }
+                    is HomeEvent.OnPokemonClicked ->{
+                        effect.setValue(HomeEffect.GoToDetailPokemon(event.pokemon))
+                    }
+                }
+            }
+
+            HomeState.Loading -> {
+                when (event) {
+                    HomeEvent.GetPokemons -> {
+                        launcher.launch(getPokemonsUseCase){
+                            state.setValue(HomeState.Loaded(it))
+                        }
+                    }
+
+                    else -> {}
+                }
+            }
+            else -> {}
         }
+
     }
 }
