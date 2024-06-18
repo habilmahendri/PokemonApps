@@ -8,6 +8,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import pokemon.abstraction.detail.DetailRepository
 import pokemon.usecase.detail.CatchPokemonUseCase
 import pokemon.usecase.detail.GetDetailPokemonUseCase
+import pokemon.usecase.detail.SavePokemonUseCase
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -25,6 +26,12 @@ object ProvideViewModelComponent {
         repository: DetailRepository,
     ) = CatchPokemonUseCase(repository)
 
+
+    @Provides
+    @ViewModelScoped
+    fun provideSavePokemon(
+        repository: DetailRepository,
+    ) = SavePokemonUseCase(repository)
 
 
 }

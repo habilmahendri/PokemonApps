@@ -32,6 +32,7 @@ import coil.compose.AsyncImage
 import dagger.hilt.android.AndroidEntryPoint
 import pokemon.model.detail.DetailArgument
 import pokemon.model.detail.Pokemon
+import pokemon.model.detail.SavePokemonDto
 import pokemon.presentation.base.PokemonActivity
 import pokemon.presentation.base.toast
 
@@ -39,17 +40,23 @@ import pokemon.presentation.base.toast
 class DetailActivity : PokemonActivity() {
     private val detailStateMachine:DetailStateMachine by viewModels()
     private val data by parcelableArgs<DetailArgument>()
+    private var savePokemonDto = SavePokemonDto(id = "", name = "", customName = "")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val payload = data ?: return
-        Log.d("payloadintent", payload.name)
         setContent {
             LaunchedEffect(key1 = Unit, block = {
                 detailStateMachine.sendEvent(DetailEvent.GetPokemon(payload.name))
                 detailStateMachine.effect.collect{
                     when(it){
                         is DetailEffect.ShowToast -> {
-                            toast(it.probability.toString())
+                            if (it.probability == 1){
+                                detailStateMachine.sendEvent(DetailEvent.SavePokemon(
+                                    savePokemonDto = savePokemonDto
+                                ))
+                            }
+                            toast(if (it.probability == 1) "Berhasil Menangkap Pokemon" else "Gagal Menangkap Pokemon")
                         }
                     }
                 }
@@ -73,6 +80,7 @@ class DetailActivity : PokemonActivity() {
 
     @Composable
     fun LoadedScreen(data:DetailState.Loaded) {
+        savePokemonDto = SavePokemonDto(id = data.pokemon.id, name = data.pokemon.name, customName = data.pokemon.name)
         Column(
             modifier = Modifier
                 .padding(10.dp)
@@ -101,17 +109,20 @@ class DetailActivity : PokemonActivity() {
                 text = "Moves:  ${data.pokemon.moves}",
                 modifier = Modifier.padding(vertical = 15.dp)
             )
-            Button(
-                onClick = {
-                    detailStateMachine.sendEvent(DetailEvent.CatchPokemon)
-                },
-                modifier = Modifier
-                    .padding(top = 16.dp)
-            ) {
-                Text("Tangkap Pokemon")
+
+            if (!data.isSuccessCatchPokemon) {
+                Button(
+                    onClick = {
+                        detailStateMachine.sendEvent(DetailEvent.CatchPokemon)
+                    },
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                ) {
+                    Text("Tangkap Pokemon")
+                }
             }
 
-            if(data.isButtonRelease){
+            if(data.isSuccessCatchPokemon){
                 Button(
                     onClick = {
                         detailStateMachine.sendEvent(DetailEvent.CatchPokemon)

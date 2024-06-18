@@ -16,3 +16,7 @@ fun getIdFromPokemonUrl(urlString: String): Int? {
 fun Int?.orZero(): Int {
     return this ?: 0
 }
+
+fun Boolean?.orFalse(): Boolean {
+    return this ?: false
+}

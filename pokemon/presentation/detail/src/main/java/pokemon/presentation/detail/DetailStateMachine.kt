@@ -2,16 +2,19 @@ package pokemon.presentation.detail
 
 import base.model.NoArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
+import pokemon.model.detail.SavePokemonDto
 import pokemon.presentation.base.PokemonStateMachine
 import pokemon.presentation.base.PokemonUseCaseErrorMapper
 import pokemon.usecase.detail.CatchPokemonUseCase
 import pokemon.usecase.detail.GetDetailPokemonUseCase
+import pokemon.usecase.detail.SavePokemonUseCase
 import javax.inject.Inject
 
 
 @HiltViewModel
 class DetailStateMachine @Inject constructor(private val getPokemonUseCase: GetDetailPokemonUseCase,
                                              private val catchPokemonUseCase: CatchPokemonUseCase,
+                                             private val savePokemonUseCase: SavePokemonUseCase,
                                            override var errorMapper: PokemonUseCaseErrorMapper
 ) : PokemonStateMachine<DetailState, DetailEvent, DetailEffect>() {
     override fun getInitialState(): DetailState {
@@ -27,9 +30,18 @@ class DetailStateMachine @Inject constructor(private val getPokemonUseCase: GetD
 
                     DetailEvent.CatchPokemon -> {
                         launcher.launch(catchPokemonUseCase){
-                            state.setValue(lastState.copy(isButtonRelease = true))
+                            if (it.probability == 1) {
+                                state.setValue(lastState.copy(isSuccessCatchPokemon = true))
+                            }
                             effect.setValue(DetailEffect.ShowToast(it.probability))
                         }
+                    }
+
+                    is DetailEvent.SavePokemon ->{
+                        launcher.launch(savePokemonUseCase, event.savePokemonDto){
+                            state.setValue(lastState.copy(isSuccessCatchPokemon = true))
+                        }
+
                     }
                 }
             }
@@ -43,6 +55,8 @@ class DetailStateMachine @Inject constructor(private val getPokemonUseCase: GetD
                             state.setValue(DetailState.Loaded(it))
                         }
                     }
+
+                    is DetailEvent.SavePokemon -> Unit
                 }
             }
         }
