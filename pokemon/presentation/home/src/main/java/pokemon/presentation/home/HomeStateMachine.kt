@@ -28,6 +28,9 @@ class HomeStateMachine @Inject constructor(private val getPokemonsUseCase: GetPo
                     is HomeEvent.OnPokemonClicked ->{
                         effect.setValue(HomeEffect.GoToDetailPokemon(event.pokemon))
                     }
+                    HomeEvent.OnMyPokemonClicked -> {
+                        effect.setValue(HomeEffect.GotoMyPokemon)
+                    }
                 }
             }
 

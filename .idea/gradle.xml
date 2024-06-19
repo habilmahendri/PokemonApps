@@ -35,26 +35,31 @@
             <option value="$PROJECT_DIR$/pokemon/abstraction/base" />
             <option value="$PROJECT_DIR$/pokemon/abstraction/detail" />
             <option value="$PROJECT_DIR$/pokemon/abstraction/home" />
+            <option value="$PROJECT_DIR$/pokemon/abstraction/mypokemon" />
             <option value="$PROJECT_DIR$/pokemon/data" />
             <option value="$PROJECT_DIR$/pokemon/data/base" />
             <option value="$PROJECT_DIR$/pokemon/data/core" />
             <option value="$PROJECT_DIR$/pokemon/data/detail" />
             <option value="$PROJECT_DIR$/pokemon/data/home" />
+            <option value="$PROJECT_DIR$/pokemon/data/mypokemon" />
             <option value="$PROJECT_DIR$/pokemon/hub" />
             <option value="$PROJECT_DIR$/pokemon/model" />
             <option value="$PROJECT_DIR$/pokemon/model/base" />
             <option value="$PROJECT_DIR$/pokemon/model/core" />
             <option value="$PROJECT_DIR$/pokemon/model/detail" />
             <option value="$PROJECT_DIR$/pokemon/model/home" />
+            <option value="$PROJECT_DIR$/pokemon/model/mypokemon" />
             <option value="$PROJECT_DIR$/pokemon/presentation" />
             <option value="$PROJECT_DIR$/pokemon/presentation/base" />
             <option value="$PROJECT_DIR$/pokemon/presentation/core" />
             <option value="$PROJECT_DIR$/pokemon/presentation/detail" />
             <option value="$PROJECT_DIR$/pokemon/presentation/home" />
+            <option value="$PROJECT_DIR$/pokemon/presentation/mypokemon" />
             <option value="$PROJECT_DIR$/pokemon/usecase" />
             <option value="$PROJECT_DIR$/pokemon/usecase/base" />
             <option value="$PROJECT_DIR$/pokemon/usecase/detail" />
             <option value="$PROJECT_DIR$/pokemon/usecase/home" />
+            <option value="$PROJECT_DIR$/pokemon/usecase/mypokemon" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

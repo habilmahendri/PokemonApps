@@ -14,6 +14,7 @@ sealed interface HomeState{
 
 sealed interface HomeEvent{
     object GetPokemons:HomeEvent
+    object OnMyPokemonClicked:HomeEvent
     data class OnPokemonClicked(
         val pokemon: PokemonItems,
     ) : HomeEvent
@@ -21,4 +22,5 @@ sealed interface HomeEvent{
 
 sealed interface HomeEffect {
     data class GoToDetailPokemon(val pokemon: PokemonItems) : HomeEffect
+    object GotoMyPokemon : HomeEffect
 }

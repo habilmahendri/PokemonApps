@@ -47,6 +47,7 @@ tasks{
 dependencies {
     api(project(":android-base:hub"))
     model(
-        ModelModules.Detail
+        ModelModules.Detail,
+        ModelModules.Mypokemon
     )
 }
